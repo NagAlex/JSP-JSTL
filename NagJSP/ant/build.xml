@@ -1,0 +1,39 @@
+<project name="NagJSP" default="copy">
+  <target name="init">
+    <echo message="Building NagJSP Project" />
+    <property name = "server" value = "C:\Tomcat\" />
+    <property name = "work" value = "D:\JavaProjects\Kursi\Lekcii\10_JSP_JSTL\Homework\NagJSP\" />
+  </target>
+
+  <target name="compile" depends="init">
+    <delete verbose = "true">
+    	<fileset dir="${work}build" />
+    </delete>
+    <javac srcdir="${work}src" destdir="${work}build">
+    	<classpath>
+    	    <fileset file="${server}lib\servlet-api.jar" />
+    	    <fileset file="${server}lib\jsp-api.jar" />
+    	</classpath>
+    </javac>
+  </target>
+
+  <target name="create" depends="compile">
+    <delete dir= "${server}webapps\NagJSP\" />
+    <mkdir  dir= "${server}webapps\NagJSP" />
+  </target>
+
+  <target name="copy" depends="create">
+    <copy todir="${server}webapps\NagJSP\WEB-INF\">
+    	<fileset dir="${work}WEB-INF" />
+    </copy>
+    <copy todir="${server}webapps\NagJSP\">
+    	<fileset dir="${work}html"/>
+    </copy>
+    <copy todir="${server}webapps\NagJSP\">
+    	<fileset dir="${work}jsp"/>
+    </copy>
+    <copy todir="${server}webapps\NagJSP\WEB-INF\classes">
+    	<fileset dir="${work}build"/>
+    </copy>
+  </target>
+</project>
